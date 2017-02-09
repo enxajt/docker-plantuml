@@ -21,8 +21,8 @@ ENV LC_ALL C.UTF-8
 RUN apt-get update && apt-get install -y \
   default-jre \
   graphviz
-#RUN curl -L http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -o /usr/bin/plantuml.jar
-COPY plantuml.jar /usr/bin/plantuml.jar
+RUN curl -L http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -o /usr/bin/plantuml.jar
+#COPY plantuml.jar /usr/bin/plantuml.jar
 RUN echo 'java -jar /usr/bin/plantuml.jar $@' > /usr/bin/plantuml \
  && chmod +x /usr/bin/plantuml
 
