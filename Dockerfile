@@ -1,6 +1,5 @@
 FROM ubuntu
 MAINTAINER enxajt
-#FROM alpine
 
 RUN apt-get update && apt-get install -y \
   language-pack-ja-base \
@@ -40,12 +39,13 @@ RUN apt-get -y purge nodejs npm \
  && npm install --global gulp gulp-cli
 
 ENV USER enxajt
-RUN useradd -m -g sudo -s /bin/zsh $USER && echo "$USER:$USER" | chpasswd
+#RUN useradd -m -g sudo $USER && echo "$USER:$USER" | chpasswd
+RUN useradd -m -g sudo $USER
 USER $USER
 WORKDIR /home/$USER
-
-RUN git config --global user.name "$USER" \
- && git config --global user.email $USER@gmail.com
+RUN git clone https://bitbucket.com/enxajt/private-config
+RUN ./private-config/git.sh
+RUN ./private-config/user.sh
 
 # gulp for plantuml
 RUN git clone https://github.com/$USER/plantuml.git /home/$USER/plantuml \
@@ -54,6 +54,5 @@ WORKDIR /home/$USER/plantuml
 RUN npm init -y \
  && npm install --save-dev gulp path gulp-plantuml gulp-webserver gulp-print gulp-cached gulp-exec gulp-ejs gulp-rename gulp-plumber gulp-json-transform gulp-tap
 EXPOSE 8000 35729
-
 
 CMD ["/bin/bash"]
