@@ -43,9 +43,13 @@ ENV USER enxajt
 RUN useradd -m -g sudo $USER
 USER $USER
 WORKDIR /home/$USER
-RUN git clone git@bitbucket.org:enxajt/private-config.git
-RUN ./private-config/git.sh
-RUN ./private-config/user.sh
+RUN mkdir ~/.ssh
+COPY /vagrant/shared/id_rsa ~/.ssh/id_rsa
+RUN touch ~/.ssh/known_hosts \
+  && ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts \
+  && git clone git@bitbucket.org:enxajt/private-config.git \
+  && sh ./private-config/git.sh \
+  && sh ./private-config/user.sh
 
 # gulp for plantuml
 RUN git clone https://github.com/$USER/plantuml.git /home/$USER/plantuml \
