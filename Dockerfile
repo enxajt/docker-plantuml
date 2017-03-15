@@ -44,16 +44,15 @@ RUN useradd -m -g sudo $USER
 USER $USER
 WORKDIR /home/$USER
 RUN mkdir ~/.ssh
-COPY /vagrant/shared/id_rsa ~/.ssh/id_rsa
-RUN touch ~/.ssh/known_hosts \
-  && ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts \
-  && git clone git@bitbucket.org:enxajt/private-config.git \
-  && sh ./private-config/git.sh \
-  && sh ./private-config/user.sh
+ADD id_rsa ~/.ssh/id_rsa
+#RUN touch ~/.ssh/known_hosts \
+#  && ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts \
+#  && git clone git@bitbucket.org:enxajt/private-config.git \
+#  && sh ./private-config/git.sh \
+#  && sh ./private-config/user.sh
 
 # gulp for plantuml
-RUN git clone https://github.com/$USER/plantuml.git /home/$USER/plantuml \
- && ln -s /home/$USER/shared/rsync/Notes /home/$USER/plantuml/src
+RUN git clone https://github.com/$USER/plantuml.git /home/$USER/plantuml
 WORKDIR /home/$USER/plantuml
 RUN npm init -y \
  && npm install --save-dev gulp path gulp-plantuml gulp-webserver gulp-print gulp-cached gulp-exec gulp-ejs gulp-rename gulp-plumber gulp-json-transform gulp-tap
