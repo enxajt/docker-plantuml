@@ -43,7 +43,7 @@ ENV USER enxajt
 RUN useradd -m -g sudo $USER
 USER $USER
 WORKDIR /home/$USER
-RUN git clone https://bitbucket.com:enxajt/private-config
+RUN git clone git@bitbucket.org:enxajt/private-config.git
 RUN ./private-config/git.sh
 RUN ./private-config/user.sh
 
