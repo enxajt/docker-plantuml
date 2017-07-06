@@ -47,7 +47,7 @@ WORKDIR /home/$USER
 #ADD id_rsa ~/.ssh/id_rsa
 COPY .ssh ~/.ssh
 COPY git.sh ~/git.sh
-sh ~/git.sh \
+RUN ~/git.sh \
 
 # gulp for plantuml
 RUN git clone https://github.com/$USER/gulp-plantuml.git /home/$USER/gulp-plantuml
