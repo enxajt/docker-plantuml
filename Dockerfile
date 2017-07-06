@@ -20,8 +20,8 @@ ENV LC_ALL C.UTF-8
 RUN apt-get update && apt-get install -y \
   default-jre \
   graphviz
-RUN curl -L http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -o /usr/bin/plantuml.jar
-#COPY plantuml.jar /usr/bin/plantuml.jar
+#RUN curl -L http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -o /usr/bin/plantuml.jar
+COPY plantuml.jar /usr/bin/plantuml.jar
 RUN echo 'java -jar /usr/bin/plantuml.jar $@' > /usr/bin/plantuml \
  && chmod +x /usr/bin/plantuml
 
@@ -39,21 +39,19 @@ RUN apt-get -y purge nodejs npm \
  && npm install --global gulp gulp-cli
 
 ENV USER enxajt
-#RUN useradd -m -g sudo $USER && echo "$USER:$USER" | chpasswd
-RUN useradd -m -g sudo $USER
+RUN useradd -m -g sudo $USER && echo "$USER:$USER" | chpasswd
+#RUN useradd -m -g sudo $USER
 USER $USER
 WORKDIR /home/$USER
-RUN mkdir ~/.ssh
-ADD id_rsa ~/.ssh/id_rsa
-#RUN touch ~/.ssh/known_hosts \
-#  && ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts \
-#  && git clone git@bitbucket.org:enxajt/private-config.git \
-#  && sh ./private-config/git.sh \
-#  && sh ./private-config/user.sh
+
+#ADD id_rsa ~/.ssh/id_rsa
+COPY .ssh ~/.ssh
+COPY git.sh ~/git.sh
+sh ~/git.sh \
 
 # gulp for plantuml
-RUN git clone https://github.com/$USER/plantuml.git /home/$USER/plantuml
-WORKDIR /home/$USER/plantuml
+RUN git clone https://github.com/$USER/gulp-plantuml.git /home/$USER/gulp-plantuml
+WORKDIR /home/$USER/gulp-plantuml
 RUN npm init -y \
  && npm install --save-dev gulp path gulp-plantuml gulp-webserver gulp-print gulp-cached gulp-exec gulp-ejs gulp-rename gulp-plumber gulp-json-transform gulp-tap
 EXPOSE 8000 35729
