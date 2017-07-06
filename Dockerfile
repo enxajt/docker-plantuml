@@ -44,16 +44,16 @@ RUN useradd -m -g sudo $USER && echo "$USER:$USER" | chpasswd
 USER $USER
 WORKDIR /home/$USER
 
-#ADD id_rsa ~/.ssh/id_rsa
-COPY .ssh ~/.ssh
-COPY git.sh ~/git.sh
-RUN ~/git.sh \
-
-# gulp for plantuml
-RUN git clone https://github.com/$USER/gulp-plantuml.git /home/$USER/gulp-plantuml
-WORKDIR /home/$USER/gulp-plantuml
-RUN npm init -y \
- && npm install --save-dev gulp path gulp-plantuml gulp-webserver gulp-print gulp-cached gulp-exec gulp-ejs gulp-rename gulp-plumber gulp-json-transform gulp-tap
-EXPOSE 8000 35729
-
-CMD ["/bin/bash"]
+#ADD id_rsa /home/$USER/.ssh/id_rsa
+COPY .ssh /home/$USER/.ssh
+COPY git.sh /home/$USER/git.sh
+#RUN /home/$USER/git.sh
+#
+## gulp for plantuml
+#RUN git clone https://github.com/$USER/gulp-plantuml.git /home/$USER/gulp-plantuml
+#WORKDIR /home/$USER/gulp-plantuml
+#RUN npm init -y \
+# && npm install --save-dev gulp path gulp-plantuml gulp-webserver gulp-print gulp-cached gulp-exec gulp-ejs gulp-rename gulp-plumber gulp-json-transform gulp-tap
+#EXPOSE 8000 35729
+#
+#CMD ["/bin/bash"]
