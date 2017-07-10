@@ -43,7 +43,7 @@ COPY git.sh /git.sh
 RUN /git.sh
 
 # gulp for plantuml
-RUN git clone https://github.com/enxajt/plantuml.git /gulp-plantuml
+RUN git clone https://github.com/enxajt/gulp-plantuml.git /plantuml
 WORKDIR /plantuml
 RUN npm init -y \
  && npm install --save-dev gulp path gulp-plantuml gulp-webserver gulp-print gulp-cached gulp-exec gulp-ejs gulp-rename gulp-plumber gulp-json-transform gulp-tap
