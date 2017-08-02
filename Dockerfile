@@ -47,6 +47,6 @@ RUN git clone https://github.com/enxajt/gulp-plantuml.git /plantuml
 WORKDIR /plantuml
 RUN npm init -y \
  && npm install --save-dev gulp path gulp-plantuml gulp-webserver gulp-print gulp-cached gulp-exec gulp-ejs gulp-rename gulp-plumber gulp-json-transform gulp-tap
-EXPOSE 8000 35729
 
+EXPOSE 8000 35729
 CMD ["/bin/bash"]
