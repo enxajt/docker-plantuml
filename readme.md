@@ -1,6 +1,6 @@
 # how to use
 ```
-docker run -p 8000:8000 -p 35729:35729 -v $(pwd):/plantuml/src --rm -it plantuml
+docker run -p 8000:8000 -p 35729:35729 -v $(pwd):/plantuml/src -v $(pwd):/plantuml/dst --rm -it plantuml
 gulp
 http://localhost:8000/dst/dev-cycle-member.html
 ```
